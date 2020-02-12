@@ -111,11 +111,3 @@ promptUser()
             console.log(err);
         })
     });
-
-// function writeFile(fileName, data) {
- 
-// }
-
-// function init() {
-
-// init();
