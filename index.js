@@ -3,12 +3,22 @@ const fs = require("fs");
 const inquirer = require("inquirer");
 const util = require("util");
 
-const writeFileAsync = util.promisify(fs.writeFile);
+//const writeFileAsync = util.promisify(fs.writeFile);
 
-function writeFile(fileName, data) {
+inquirer
+    .prompt({
+        message: "Enter your Github username:",
+        name: "username"
+    },
+    {
+        message: "Enter your favorite color:",
+        name: "color"
+    });
+
+// function writeFile(fileName, data) {
  
-}
+// }
 
-function init() {
+// function init() {
 
-init();
+// init();
