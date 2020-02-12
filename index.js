@@ -3,7 +3,7 @@ const fs = require("fs");
 const axios = require("axios");
 const util = require("util");
 
-//const writeFileAsync = util.promisify(fs.writeFile);
+const writeFileAsync = util.promisify(fs.writeFile);
 
 function promptUser() {
     return inquirer.prompt([
@@ -20,7 +20,13 @@ function promptUser() {
     ]);
 }
 
-promptUser();
+promptUser().then(function({ username }) {
+    const queryUrl = `https://api.github.com/users/${username}`;
+
+    axios.get(queryUrl).then(function(data){
+        console.log(data);
+    })
+})
 
 // function writeFile(fileName, data) {
  
