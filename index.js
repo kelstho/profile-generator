@@ -1,21 +1,11 @@
 const inquirer = require("inquirer");
 const fs = require("fs");
+const inquirer = require("inquirer");
 const util = require("util");
 
-const questions = [
-    {
-        type: "input",
-        name: "username",
-        message: "What is your Github username?"
-    },
-    {
-        type: "input",
-        name: "color",
-        message: "What is your favorite color?"
-    }
-];
+const writeFileAsync = util.promisify(fs.writeFile);
 
-function writeToFile(fileName, data) {
+function writeFile(fileName, data) {
  
 }
 
