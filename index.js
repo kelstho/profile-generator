@@ -1,12 +1,11 @@
 const inquirer = require("inquirer");
 const fs = require("fs");
-const inquirer = require("inquirer");
+const axios = require("axios");
 const util = require("util");
 
 //const writeFileAsync = util.promisify(fs.writeFile);
 
-inquirer
-    .prompt({
+inquirer.prompt({
         message: "Enter your Github username:",
         name: "username"
     },
