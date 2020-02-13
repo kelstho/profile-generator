@@ -101,7 +101,8 @@ promptUser()
 
         axios.get(queryUrl).then(function(data){
             const html = generateHTML(data);
-
+            console.log(data);
+            
             return writeFileAsync("index.html", html);
         }).then(function(){
             console.log("Successfully wrote to index.html");
