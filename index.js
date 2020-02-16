@@ -35,21 +35,21 @@ function generateHTML(data) {
   </head>
   <body style="background-color: ">
     <div class="jumbotron">
-      <img src="${data.avatar_url}">
-      <h1 class="display-4 text-center">${data.name}</h1>
-      <p class="lead text-center">${data.login}</p>
-      <p class="lead text-center">${data.bio}</p>
+      <img src="${data.data.avatar_url}">
+      <h1 class="display-4 text-center">${data.data.name}</h1>
+      <p class="lead text-center">${data.data.login}</p>
+      <p class="lead text-center">${data.data.bio}</p>
     </div>
     <div class="container">
       <div class="row">
         <div class="col-sm-12 col-md-4">
-          <p class="text-center">${data.location}</p>
+          <p class="text-center">${data.data.location}</p>
         </div>
         <div class="col-sm-12 col-md-4">
-          <p class="text-center">${data.html_url}</p>
+          <p class="text-center">${data.data.html_url}</p>
         </div>
         <div class="col-sm-12 col-md-4">
-          <p class="text-center">${data.blog}</p>
+          <p class="text-center">${data.data.blog}</p>
         </div>
       </div>
     </div>
@@ -59,7 +59,7 @@ function generateHTML(data) {
           <div class="card">
             <div class="card-body">
               <h5 class="card-title text-center">Followers:</h5>
-              <p class="card-text text-center">${data.followers}</p>
+              <p class="card-text text-center">${data.data.followers}</p>
             </div>
           </div>
         </div>
@@ -67,7 +67,7 @@ function generateHTML(data) {
           <div class="card">
             <div class="card-body">
               <h5 class="card-title text-center">Following:</h5>
-              <p class="card-text text-center">${data.following}</p>
+              <p class="card-text text-center">${data.data.following}</p>
             </div>
           </div>
         </div>
@@ -77,7 +77,7 @@ function generateHTML(data) {
           <div class="card">
             <div class="card-body">
               <h5 class="card-title text-center">Stars:</h5>
-              <p class="card-text text-center">${data.public_gists}</p>
+              <p class="card-text text-center">${data.data.public_gists}</p>
             </div>
           </div>
         </div>
@@ -85,7 +85,7 @@ function generateHTML(data) {
           <div class="card">
             <div class="card-body">
               <h5 class="card-title text-center">Public Repos:</h5>
-              <p class="card-text text-center">${data.pubulic_repos}</p>
+              <p class="card-text text-center">${data.data.public_repos}</p>
             </div>
           </div>
         </div>
@@ -101,7 +101,6 @@ promptUser()
 
     axios.get(queryUrl).then(function(data){
         const html = generateHTML(data);
-        console.log(data);
         
         return writeFileAsync("index.html", html);
     }).then(function(){
