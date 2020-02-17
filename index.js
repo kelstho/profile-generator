@@ -34,7 +34,7 @@ function generateHTML(res) {
       <link rel="stylesheet" type="text/css" href="assets/css/style.css">
   </head>
   <body>
-    <div class="jumbotron" style="background-color: ${userColor};">
+    <div class="jumbotron" style="background-color: ;">
       <div class="text-center">
       <img src="${res.data.avatar_url}" class= "rounded-circle" style="max-height: 200px;">
       </div>
@@ -103,8 +103,7 @@ promptUser()
   .then(function({ username }) {
     const queryUrl = `https://api.github.com/users/${username}`;
 
-    axios.get(queryUrl)
-    .then(function(res){
+    axios.get(queryUrl).then(function(res){
         const html = generateHTML(res);
         
         return writeFileAsync("profile.html", html);
