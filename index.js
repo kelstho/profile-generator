@@ -20,7 +20,7 @@ function promptUser() {
   ]);
 }
 
-function generateHTML(data) {
+function generateHTML(res) {
   return `
   <!DOCTYPE html>
   <html lang="en">
@@ -28,7 +28,7 @@ function generateHTML(data) {
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
       <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
-      <title>${data.data.name}</title>
+      <title>${res.data.name}</title>
       <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
       <link rel="stylesheet" type="text/css" href="assets/css/style.css">
@@ -36,26 +36,26 @@ function generateHTML(data) {
   <body>
     <div class="jumbotron" style="background-color: ;">
       <div class="text-center">
-      <img src="${data.data.avatar_url}" class= "rounded-circle" style="max-height: 200px;">
+      <img src="${res.data.avatar_url}" class= "rounded-circle" style="max-height: 200px;">
       </div>
-      <h1 class="display-4 text-center">${data.data.name}</h1>
-      <h4 class="text-center">${data.data.login}</h4>
+      <h1 class="display-4 text-center">${res.data.name}</h1>
+      <h4 class="text-center">${res.data.login}</h4>
       <div class="row justify-content-sm-center">
         <div class="col-sm-8">
-          <p class="lead text-center">${data.data.bio}</p>
+          <p class="lead text-center">${res.data.bio}</p>
         </div>
       </div>
     </div>
     <div class="container">
       <div class="row">
         <div class="col-sm-12 col-md-4 text-center">
-          <p><a href="https://www.google.com/maps/place/${data.data.location}">${data.data.location}</a></p>
+          <p><a href="https://www.google.com/maps/place/${res.data.location}">${res.data.location}</a></p>
         </div>
         <div class="col-sm-12 col-md-4 text-center">
-          <p><a href="${data.data.html_url}">Github</a></p>
+          <p><a href="${res.data.html_url}">Github</a></p>
         </div>
         <div class="col-sm-12 col-md-4 text-center">
-          <p><a href="${data.data.blog}" class="text-center">Portfolio</a></p>
+          <p><a href="${res.data.blog}" class="text-center">Portfolio</a></p>
         </div>
       </div>
     </div>
@@ -65,7 +65,7 @@ function generateHTML(data) {
           <div class="card">
             <div class="card-body">
               <h5 class="card-title text-center">Followers:</h5>
-              <p class="card-text text-center">${data.data.followers}</p>
+              <p class="card-text text-center">${res.data.followers}</p>
             </div>
           </div>
         </div>
@@ -73,7 +73,7 @@ function generateHTML(data) {
           <div class="card">
             <div class="card-body">
               <h5 class="card-title text-center">Following:</h5>
-              <p class="card-text text-center">${data.data.following}</p>
+              <p class="card-text text-center">${res.data.following}</p>
             </div>
           </div>
         </div>  
@@ -81,7 +81,7 @@ function generateHTML(data) {
           <div class="card">
             <div class="card-body">
               <h5 class="card-title text-center">Stars:</h5>
-              <p class="card-text text-center">${data.data.public_gists}</p>
+              <p class="card-text text-center">${res.data.public_gists}</p>
             </div>
           </div>
         </div>
@@ -89,7 +89,7 @@ function generateHTML(data) {
           <div class="card">
             <div class="card-body">
               <h5 class="card-title text-center">Public Repos:</h5>
-              <p class="card-text text-center">${data.data.public_repos}</p>
+              <p class="card-text text-center">${res.data.public_repos}</p>
             </div>
           </div>
         </div>
@@ -103,8 +103,9 @@ promptUser()
   .then(function({ username }) {
     const queryUrl = `https://api.github.com/users/${username}`;
 
-    axios.get(queryUrl).then(function(data){
-        const html = generateHTML(data);
+    axios.get(queryUrl)
+    .then(function(res){
+        const html = generateHTML(res);
         
         return writeFileAsync("profile.html", html);
     }).then(function(){
