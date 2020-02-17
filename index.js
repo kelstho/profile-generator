@@ -28,34 +28,40 @@ function generateHTML(data) {
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
       <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
-      <title>Title</title>
+      <title>${data.data.name}</title>
       <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
       <link rel="stylesheet" type="text/css" href="assets/css/style.css">
   </head>
-  <body style="background-color: ">
-    <div class="jumbotron">
-      <img src="${data.data.avatar_url}">
+  <body>
+    <div class="jumbotron" style="background-color: ;">
+      <div class="text-center">
+      <img src="${data.data.avatar_url}" class= "rounded-circle" style="max-height: 200px;">
+      </div>
       <h1 class="display-4 text-center">${data.data.name}</h1>
-      <p class="lead text-center">${data.data.login}</p>
-      <p class="lead text-center">${data.data.bio}</p>
-    </div>
-    <div class="container">
-      <div class="row">
-        <div class="col-sm-12 col-md-4">
-          <p class="text-center">${data.data.location}</p>
-        </div>
-        <div class="col-sm-12 col-md-4">
-          <p class="text-center">${data.data.html_url}</p>
-        </div>
-        <div class="col-sm-12 col-md-4">
-          <p class="text-center">${data.data.blog}</p>
+      <h4 class="text-center">${data.data.login}</h4>
+      <div class="row justify-content-sm-center">
+        <div class="col-sm-8">
+          <p class="lead text-center">${data.data.bio}</p>
         </div>
       </div>
     </div>
     <div class="container">
       <div class="row">
-        <div class="col-sm-6">
+        <div class="col-sm-12 col-md-4 text-center">
+          <p><a href="https://www.google.com/maps/place/${data.data.location}">${data.data.location}</a></p>
+        </div>
+        <div class="col-sm-12 col-md-4 text-center">
+          <p><a href="${data.data.html_url}">Github</a></p>
+        </div>
+        <div class="col-sm-12 col-md-4 text-center">
+          <p><a href="${data.data.blog}" class="text-center">Portfolio</a></p>
+        </div>
+      </div>
+    </div>
+    <div class="container" style="margin-top: 30px; margin-bottom: 50px;">
+      <div class="row">
+        <div class="col-sm-3">
           <div class="card">
             <div class="card-body">
               <h5 class="card-title text-center">Followers:</h5>
@@ -63,17 +69,15 @@ function generateHTML(data) {
             </div>
           </div>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-3">
           <div class="card">
             <div class="card-body">
               <h5 class="card-title text-center">Following:</h5>
               <p class="card-text text-center">${data.data.following}</p>
             </div>
           </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-6">
+        </div>  
+        <div class="col-sm-3">
           <div class="card">
             <div class="card-body">
               <h5 class="card-title text-center">Stars:</h5>
@@ -81,7 +85,7 @@ function generateHTML(data) {
             </div>
           </div>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-3">
           <div class="card">
             <div class="card-body">
               <h5 class="card-title text-center">Public Repos:</h5>
