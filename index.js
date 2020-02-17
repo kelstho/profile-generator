@@ -34,7 +34,7 @@ function generateHTML(res) {
       <link rel="stylesheet" type="text/css" href="assets/css/style.css">
   </head>
   <body>
-    <div class="jumbotron" style="background-color: ;">
+    <div class="jumbotron" style="background-color: ${userColor};">
       <div class="text-center">
       <img src="${res.data.avatar_url}" class= "rounded-circle" style="max-height: 200px;">
       </div>
