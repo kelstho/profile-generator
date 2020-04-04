@@ -1,4 +1,4 @@
-Profile Generator
+# Profile Generator
 
 This command line application is supposed to take in the Github user name and favorite color of the user,
 and dynamically generate a PDF containing various information about their github profile, in their favorite 
