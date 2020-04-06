@@ -19,6 +19,7 @@
   "dependencies": {
     "axios": "^0.19.2",
     "electron": "^8.0.1",
-    "inquirer": "^7.0.4"
+    "inquirer": "^7.0.4",
+    "minimist": "^1.2.5"
   }
 }
