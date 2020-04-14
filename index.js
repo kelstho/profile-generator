@@ -11,11 +11,6 @@ function promptUser() {
           type: "input",
           message: "Enter your Github username:",
           name: "username"
-      },
-      {
-          type: "input",
-          message: "Enter your favorite color:",
-          name: "color"
       }
   ]);
 }
