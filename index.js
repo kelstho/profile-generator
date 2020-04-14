@@ -5,17 +5,37 @@ const util = require("util");
 
 const writeFileAsync = util.promisify(fs.writeFile);
 
+const userInfo = {
+  name: "",
+  color: "",
+  picture: "",
+  login: "",
+  bio: "",
+  location: "",
+  profile: "",
+  portfolio: "",
+  followers: "",
+  following: "",
+  stars: "",
+  repos: ""
+};
+
 function promptUser() {
   return inquirer.prompt([
       {
           type: "input",
           message: "Enter your Github username:",
           name: "username"
+      },
+      {
+        type: "input",
+        message: "Enter your favorite color:",
+        name: "color"
       }
   ]);
 }
 
-function generateHTML(res) {
+function generateHTML(info) {
   return `
   <!DOCTYPE html>
   <html lang="en">
@@ -23,32 +43,32 @@ function generateHTML(res) {
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
       <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
-      <title>${res.data.name}</title>
+      <title>${info.name}</title>
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   </head>
   <body>
-    <div class="jumbotron" style="background-color: ;">
+    <div class="jumbotron" style="background-color: ${info.color} ;">
       <div class="text-center">
-      <img src="${res.data.avatar_url}" class= "rounded-circle" style="max-height: 200px;">
+      <img src="${info.picture}" class= "rounded-circle" style="max-height: 200px;">
       </div>
-      <h1 class="display-4 text-center">${res.data.name}</h1>
-      <h4 class="text-center">${res.data.login}</h4>
+      <h1 class="display-4 text-center">${info.name}</h1>
+      <h4 class="text-center">${info.login}</h4>
       <div class="row justify-content-sm-center">
         <div class="col-sm-8">
-          <p class="lead text-center">${res.data.bio}</p>
+          <p class="lead text-center">${info.bio}</p>
         </div>
       </div>
     </div>
     <div class="container">
       <div class="row">
         <div class="col-sm-12 col-md-4 text-center">
-          <p><a href="https://www.google.com/maps/place/${res.data.location}">${res.data.location}</a></p>
+          <p><a href="https://www.google.com/maps/place/${info.location}">${info.location}</a></p>
         </div>
         <div class="col-sm-12 col-md-4 text-center">
-          <p><a href="${res.data.html_url}">Github</a></p>
+          <p><a href="${info.profile}">Github</a></p>
         </div>
         <div class="col-sm-12 col-md-4 text-center">
-          <p><a href="${res.data.blog}" class="text-center">Portfolio</a></p>
+          <p><a href="${info.portfolio}" class="text-center">Portfolio</a></p>
         </div>
       </div>
     </div>
@@ -58,7 +78,7 @@ function generateHTML(res) {
           <div class="card">
             <div class="card-body">
               <h5 class="card-title text-center">Followers:</h5>
-              <p class="card-text text-center">${res.data.followers}</p>
+              <p class="card-text text-center">${info.followers}</p>
             </div>
           </div>
         </div>
@@ -66,7 +86,7 @@ function generateHTML(res) {
           <div class="card">
             <div class="card-body">
               <h5 class="card-title text-center">Following:</h5>
-              <p class="card-text text-center">${res.data.following}</p>
+              <p class="card-text text-center">${info.following}</p>
             </div>
           </div>
         </div>  
@@ -74,7 +94,7 @@ function generateHTML(res) {
           <div class="card">
             <div class="card-body">
               <h5 class="card-title text-center">Stars:</h5>
-              <p class="card-text text-center">${res.data.public_gists}</p>
+              <p class="card-text text-center">${info.stars}</p>
             </div>
           </div>
         </div>
@@ -82,7 +102,7 @@ function generateHTML(res) {
           <div class="card">
             <div class="card-body">
               <h5 class="card-title text-center">Public Repos:</h5>
-              <p class="card-text text-center">${res.data.public_repos}</p>
+              <p class="card-text text-center">${info.repos}</p>
             </div>
           </div>
         </div>
@@ -93,11 +113,24 @@ function generateHTML(res) {
 }
 
 promptUser()
-  .then(function({ username }) {
-    const queryUrl = `https://api.github.com/users/${username}`;
+  .then(function(data) {
+    userInfo.login = data.username;
+    userInfo.color = data.color;
+
+    const queryUrl = `https://api.github.com/users/${data.username}`;
 
     axios.get(queryUrl).then(function(res){
-        const html = generateHTML(res);
+        userInfo.name = res.data.name;
+        userInfo.picture = res.data.avatar_url;
+        userInfo.bio = res.data.bio;
+        userInfo.location = res.data.location;
+        userInfo.profile = res.data.html_url;
+        userInfo.portfolio = res.data.blog;
+        userInfo.followers = res.data.followers;
+        userInfo.following = res.data.following;
+        userInfo.stars = res.data.public_gists;
+        userInfo.repos = res.data.public_repos;
+        const html = generateHTML(userInfo);
         
         return writeFileAsync("profile.html", html);
     }).then(function(){
