@@ -1,9 +1,7 @@
-const inquirer = require("inquirer");
 const fs = require("fs");
+const inquirer = require("inquirer");
 const axios = require("axios");
-const util = require("util");
-
-const writeFileAsync = util.promisify(fs.writeFile);
+const pdf = require("html-pdf");
 
 const userInfo = {
   name: "",
@@ -22,16 +20,16 @@ const userInfo = {
 
 function promptUser() {
   return inquirer.prompt([
-      {
-          type: "input",
-          message: "Enter your Github username:",
-          name: "username"
-      },
-      {
-        type: "input",
-        message: "Enter your favorite color:",
-        name: "color"
-      }
+    {
+      type: "input",
+      message: "Enter your Github username:",
+      name: "username"
+    },
+    {
+      type: "input",
+      message: "Enter your favorite color:",
+      name: "color"
+    }
   ]);
 }
 
@@ -113,28 +111,42 @@ function generateHTML(info) {
 }
 
 promptUser()
-  .then(function(data) {
+  .then(function (data) {
     userInfo.login = data.username;
     userInfo.color = data.color;
     const queryUrl = `https://api.github.com/users/${data.username}`;
 
-    axios.get(queryUrl).then(function(res){
-        userInfo.name = res.data.name;
-        userInfo.picture = res.data.avatar_url;
-        userInfo.bio = res.data.bio;
-        userInfo.location = res.data.location;
-        userInfo.profile = res.data.html_url;
-        userInfo.portfolio = res.data.blog;
-        userInfo.followers = res.data.followers;
-        userInfo.following = res.data.following;
-        userInfo.stars = res.data.public_gists;
-        userInfo.repos = res.data.public_repos;
-        const html = generateHTML(userInfo);
-        
-        return writeFileAsync("profile.html", html);
-    }).then(function(){
-        console.log("Successfully wrote to profile.html");
-    }).catch(function(err){
-        console.log(err);
-  })
-});
+    axios.get(queryUrl).then(function (res) {
+      userInfo.name = res.data.name;
+      userInfo.picture = res.data.avatar_url;
+      userInfo.bio = res.data.bio;
+      userInfo.location = res.data.location;
+      userInfo.profile = res.data.html_url;
+      userInfo.portfolio = res.data.blog;
+      userInfo.followers = res.data.followers;
+      userInfo.following = res.data.following;
+      userInfo.stars = res.data.public_gists;
+      userInfo.repos = res.data.public_repos;
+
+      const html = generateHTML(userInfo);
+
+      fs.writeFile("profile.html", html, function (err) {
+        if (err) {
+          return console.log(err);
+        }
+      });
+      const options = {
+        format: 'A3',
+        orientation: 'landscape',
+      };
+      pdf.create(html, options).toFile("profile.pdf", function (err) { 
+        if (err) {
+          return console.log(err);
+        }
+      });
+    }).then(function () {
+      console.log("Successfully wrote to profile.html & profile.pdf");
+    }).catch(function (err) {
+      console.log(err);
+    })
+  });
