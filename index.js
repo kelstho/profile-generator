@@ -139,7 +139,7 @@ promptUser()
         format: 'A3',
         orientation: 'landscape',
       };
-      pdf.create(html, options).toFile("profile.pdf", function (err) { 
+      pdf.create(html, options).toFile("profile.pdf", function (err) {
         if (err) {
           return console.log(err);
         }
