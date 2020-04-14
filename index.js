@@ -1,8 +1,9 @@
-const fs = require("fs");
 const inquirer = require("inquirer");
 const axios = require("axios");
+const fs = require("fs");
 const pdf = require("html-pdf");
 
+// object to store user info
 const userInfo = {
   name: "",
   color: "",
@@ -18,6 +19,7 @@ const userInfo = {
   repos: ""
 };
 
+// inquirer function to collect username & color choice from user
 function promptUser() {
   return inquirer.prompt([
     {
@@ -33,6 +35,7 @@ function promptUser() {
   ]);
 }
 
+// base html to be generated
 function generateHTML(info) {
   return `
   <!DOCTYPE html>
@@ -110,6 +113,8 @@ function generateHTML(info) {
   </html>`;
 }
 
+// methods to initialize the app, save user info, query the Github API,
+// and generate the html & pdf files
 promptUser()
   .then(function (data) {
     userInfo.login = data.username;
@@ -150,3 +155,4 @@ promptUser()
       console.log(err);
     })
   });
+  
