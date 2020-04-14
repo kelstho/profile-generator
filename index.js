@@ -29,7 +29,7 @@ function promptUser() {
     },
     {
       type: "input",
-      message: "Enter your favorite color:",
+      message: "Enter your favorite color (no spaces):",
       name: "color"
     }
   ]);
@@ -116,12 +116,12 @@ function generateHTML(info) {
 // methods to initialize the app, save user info, query the Github API,
 // and generate the html & pdf files
 promptUser()
-  .then(function (data) {
+  .then((data) => {
     userInfo.login = data.username;
     userInfo.color = data.color;
     const queryUrl = `https://api.github.com/users/${data.username}`;
 
-    axios.get(queryUrl).then(function (res) {
+    axios.get(queryUrl).then((res) => {
       userInfo.name = res.data.name;
       userInfo.picture = res.data.avatar_url;
       userInfo.bio = res.data.bio;
@@ -135,7 +135,7 @@ promptUser()
 
       const html = generateHTML(userInfo);
 
-      fs.writeFile("profile.html", html, function (err) {
+      fs.writeFile("profile.html", html, (err) => {
         if (err) {
           return console.log(err);
         }
@@ -144,14 +144,14 @@ promptUser()
         format: 'A3',
         orientation: 'landscape',
       };
-      pdf.create(html, options).toFile("profile.pdf", function (err) {
+      pdf.create(html, options).toFile("profile.pdf", (err) => {
         if (err) {
           return console.log(err);
         }
       });
-    }).then(function () {
+    }).then(() => {
       console.log("Successfully wrote to profile.html & profile.pdf");
-    }).catch(function (err) {
+    }).catch((err) => {
       console.log(err);
     })
   });
