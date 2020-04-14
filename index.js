@@ -116,7 +116,6 @@ promptUser()
   .then(function(data) {
     userInfo.login = data.username;
     userInfo.color = data.color;
-
     const queryUrl = `https://api.github.com/users/${data.username}`;
 
     axios.get(queryUrl).then(function(res){
